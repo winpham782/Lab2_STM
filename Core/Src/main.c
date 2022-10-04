@@ -43,7 +43,10 @@
 TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
-
+const int MAX_LED = 4;
+int index_led = 0;
+int hour = 15, minute = 8, second = 50;
+int led_buffer [4]={1, 2, 3, 4};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -53,6 +56,8 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 void display7SEG(int num);
 void update7SEG ( int index );
+void updateClockBuffer ();
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -77,9 +82,6 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
-  const int MAX_LED = 4;
-  int index_led = 0;
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -98,98 +100,66 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  settimer1(50);
-  settimer2(100);
-  settimer3(100);
+  settimer1(100);
+  settimer2(24);
   int led=0;
   while (1)
   {
-	  if(timer2_flag==1)
-	  	  {
-	  		  settimer2(100);
-	  		  HAL_GPIO_TogglePin(led_red_GPIO_Port, led_red_Pin);
-	  		  HAL_GPIO_TogglePin(dot_GPIO_Port, dot_Pin);
-	  	  }
-
-	  switch(led)
-	  {
-	  case 0:
-		  if (timer3_flag==1)
-			  {
-			  settimer3(100);
-			  update7SEG(index_led++);
-			  if(index_led > MAX_LED-1) index_led=0;
-			  }
-		  else update7SEG(index_led);
-
-		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 0);
-		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 1);
-		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
-		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
-		  if(timer1_flag==1)
-		  {
-			  settimer1(50);
-			  led=1;
-		  }
-		  break;
-	  case 1:
-		  if (timer3_flag==1)
-		  			  {
-		  			  settimer3(100);
-		  			  update7SEG(index_led++);
-		  			  if(index_led > MAX_LED-1) index_led=0;
-		  			  }
-		  		  else update7SEG(index_led);
-
-		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 1);
-		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 0);
-		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
-		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
-		  if(timer1_flag==1)
-		  		  {
-		  			  settimer1(50);
-		  			  led=2;
-		  		  }
-		  break;
-	  case 2:
-		  if (timer3_flag==1)
-		  {
-		  settimer3(100);
-		  update7SEG(index_led++);
-		  if(index_led > MAX_LED-1) index_led=0;
-		  }
-	  else update7SEG(index_led);
-	  		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 1);
-	  		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 1);
-	  		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 0);
-	  		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
-	  		  if(timer1_flag==1)
-	  		  		  {
-	  		  			  settimer1(50);
-	  		  			  led=3;
-	  		  		  }
-	  		  break;
-	  case 3:
-		  if (timer3_flag==1)
-		  			  {
-		  			  settimer3(100);
-		  			  update7SEG(index_led++);
-		  			  if(index_led > MAX_LED-1) index_led=0;
-		  			  }
-		  		  else update7SEG(index_led);
-
-	  	  		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 1);
-	  	  		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 1);
-	  	  		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
-	  	  		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 0);
-	  	  		  if(timer1_flag==1)
-	  	  		  		  {
-	  	  		  			  settimer1(50);
-	  	  		  			  led=0;
-	  	  		  		  }
-	  	  		  break;
-	  default: break;
+	  if (timer1_flag==1){
+		  settimer1(100);
+	  second ++;
+	  if ( second >= 2) {
+	  second = 0;
+	  minute ++;
 	  }
+	  if( minute >= 60) {
+	  minute = 0;
+	  hour ++;
+	  }
+	  if( hour >=24){
+	  hour = 0;
+	  }
+	  updateClockBuffer ();
+	  }
+
+		  switch(led)
+		  	  {
+		  	  case 0:
+		  		  if (timer2_flag==1)
+		  			  {
+
+		  			  update7SEG(index_led++);
+		  			  if(index_led > MAX_LED-1) index_led=0;
+		  			  led=1;
+		  			settimer2(24);
+		  			  }
+		  		  else update7SEG(index_led);
+
+		  		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 0);
+		  		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 1);
+		  		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
+		  		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
+		  		  break;
+		  	  case 1:
+		  		  if (timer2_flag==1)
+		  		  			  {
+
+		  		  			  update7SEG(index_led++);
+		  		  			  if(index_led > MAX_LED-1) index_led=0;
+		  		  			  led=0;
+		  		  			settimer2(24);
+		  		  			  }
+		  		  		  else update7SEG(index_led);
+
+		  		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 1);
+		  		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 0);
+		  		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
+		  		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
+		  		  break;
+		  	  default: break;
+	  }
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -319,6 +289,25 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void updateClockBuffer ()
+{
+	if (hour>=10)
+	{
+		led_buffer[0]=1; led_buffer[1]=hour%10;
+	}
+	else {
+		led_buffer[0]=0; led_buffer[1]=hour;
+	}
+
+
+	if (minute>=10)
+		{
+			led_buffer[2]=minute/10; led_buffer[3]=minute%10;
+		}
+		else {
+			led_buffer[2]=0; led_buffer[3]=minute;
+		}
+}
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -365,7 +354,7 @@ void display7SEG(int num)
 		HAL_GPIO_WritePin(GPIOB, a_Pin|b_Pin|c_Pin|f_Pin|d_Pin|e_Pin|g_Pin, GPIO_PIN_RESET);
 		break;
 	case 9:
-		HAL_GPIO_WritePin(GPIOB, a_Pin|b_Pin|c_Pin|f_Pin|d_Pin|e_Pin|g_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOB, a_Pin|b_Pin|c_Pin|f_Pin|d_Pin|g_Pin, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(GPIOB, e_Pin, GPIO_PIN_SET);
 		break;
 	default: break;
@@ -373,7 +362,6 @@ void display7SEG(int num)
 }
 
 void update7SEG ( int index ){
-int led_buffer [4] = {7, 8, 2, 0};
 switch ( index ){
 case 0:
 	display7SEG(led_buffer[index]);
