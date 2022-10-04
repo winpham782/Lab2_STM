@@ -131,8 +131,8 @@ int main(void)
   settimer2(100);
  8000176:	2064      	movs	r0, #100	; 0x64
  8000178:	f000 fb7e 	bl	8000878 <settimer2>
-  settimer3(50);
- 800017c:	2032      	movs	r0, #50	; 0x32
+  settimer3(100);
+ 800017c:	2064      	movs	r0, #100	; 0x64
  800017e:	f000 fb8f 	bl	80008a0 <settimer3>
   int led=0;
  8000182:	2300      	movs	r3, #0
@@ -177,8 +177,8 @@ int main(void)
  80001c8:	2b01      	cmp	r3, #1
  80001ca:	d10f      	bne.n	80001ec <main+0xa0>
 			  {
-			  settimer3(50);
- 80001cc:	2032      	movs	r0, #50	; 0x32
+			  settimer3(100);
+ 80001cc:	2064      	movs	r0, #100	; 0x64
  80001ce:	f000 fb67 	bl	80008a0 <settimer3>
 			  update7SEG(index_led++);
  80001d2:	68fb      	ldr	r3, [r7, #12]
@@ -241,8 +241,8 @@ int main(void)
  8000238:	2b01      	cmp	r3, #1
  800023a:	d10f      	bne.n	800025c <main+0x110>
 		  			  {
-		  			  settimer3(50);
- 800023c:	2032      	movs	r0, #50	; 0x32
+		  			  settimer3(100);
+ 800023c:	2064      	movs	r0, #100	; 0x64
  800023e:	f000 fb2f 	bl	80008a0 <settimer3>
 		  			  update7SEG(index_led++);
  8000242:	68fb      	ldr	r3, [r7, #12]
@@ -305,8 +305,8 @@ int main(void)
  80002a6:	2b01      	cmp	r3, #1
  80002a8:	d10f      	bne.n	80002ca <main+0x17e>
 		  {
-		  settimer3(50);
- 80002aa:	2032      	movs	r0, #50	; 0x32
+		  settimer3(100);
+ 80002aa:	2064      	movs	r0, #100	; 0x64
  80002ac:	f000 faf8 	bl	80008a0 <settimer3>
 		  update7SEG(index_led++);
  80002b0:	68fb      	ldr	r3, [r7, #12]
@@ -368,8 +368,8 @@ int main(void)
  8000314:	2b01      	cmp	r3, #1
  8000316:	d10f      	bne.n	8000338 <main+0x1ec>
 		  			  {
-		  			  settimer3(50);
- 8000318:	2032      	movs	r0, #50	; 0x32
+		  			  settimer3(100);
+ 8000318:	2064      	movs	r0, #100	; 0x64
  800031a:	f000 fac1 	bl	80008a0 <settimer3>
 		  			  update7SEG(index_led++);
  800031e:	68fb      	ldr	r3, [r7, #12]

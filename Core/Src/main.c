@@ -100,7 +100,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   settimer1(50);
   settimer2(100);
-  settimer3(50);
+  settimer3(100);
   int led=0;
   while (1)
   {
@@ -116,7 +116,7 @@ int main(void)
 	  case 0:
 		  if (timer3_flag==1)
 			  {
-			  settimer3(50);
+			  settimer3(100);
 			  update7SEG(index_led++);
 			  if(index_led > MAX_LED-1) index_led=0;
 			  }
@@ -135,7 +135,7 @@ int main(void)
 	  case 1:
 		  if (timer3_flag==1)
 		  			  {
-		  			  settimer3(50);
+		  			  settimer3(100);
 		  			  update7SEG(index_led++);
 		  			  if(index_led > MAX_LED-1) index_led=0;
 		  			  }
@@ -154,7 +154,7 @@ int main(void)
 	  case 2:
 		  if (timer3_flag==1)
 		  {
-		  settimer3(50);
+		  settimer3(100);
 		  update7SEG(index_led++);
 		  if(index_led > MAX_LED-1) index_led=0;
 		  }
@@ -172,7 +172,7 @@ int main(void)
 	  case 3:
 		  if (timer3_flag==1)
 		  			  {
-		  			  settimer3(50);
+		  			  settimer3(100);
 		  			  update7SEG(index_led++);
 		  			  if(index_led > MAX_LED-1) index_led=0;
 		  			  }
