@@ -9,8 +9,10 @@
 #define INC_TIMER_H_
 
 extern int timer1_flag;
+extern int timer2_flag;
 
 void settimer1(int n);
+void settimer2(int n);
 void timerrun();
 
 #endif /* INC_TIMER_H_ */
