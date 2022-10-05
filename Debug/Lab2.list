@@ -142,10 +142,10 @@ int main(void)
  800018a:	3301      	adds	r3, #1
  800018c:	4a4d      	ldr	r2, [pc, #308]	; (80002c4 <main+0x178>)
  800018e:	6013      	str	r3, [r2, #0]
-	  if ( second >= 2) {
+	  if ( second >= 1) {
  8000190:	4b4c      	ldr	r3, [pc, #304]	; (80002c4 <main+0x178>)
  8000192:	681b      	ldr	r3, [r3, #0]
- 8000194:	2b01      	cmp	r3, #1
+ 8000194:	2b00      	cmp	r3, #0
  8000196:	dd07      	ble.n	80001a8 <main+0x5c>
 	  second = 0;
  8000198:	4b4a      	ldr	r3, [pc, #296]	; (80002c4 <main+0x178>)

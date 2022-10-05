@@ -46,7 +46,7 @@ TIM_HandleTypeDef htim2;
 const int MAX_LED = 4;
 int index_led = 0;
 int hour = 15, minute = 8, second = 50;
-int led_buffer [4]={1, 2, 3, 4};
+int led_buffer [4]={1, 5, 0, 8};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,7 +108,7 @@ int main(void)
 	  if (timer1_flag==1){
 		  settimer1(100);
 	  second ++;
-	  if ( second >= 2) {
+	  if ( second >= 1) {
 	  second = 0;
 	  minute ++;
 	  }
