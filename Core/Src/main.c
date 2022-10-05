@@ -62,7 +62,19 @@ void updateClockBuffer ();
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int timer0_counter = 0;
+int timer0_flag = 0;
+int TIMER_CYCLE = 10;
+void setTimer0 ( int duration ){
+timer0_counter = duration / TIMER_CYCLE ;
+timer0_flag = 0;
+}
+void timer_run(){
+if( timer0_counter > 0){
+timer0_counter --;
+if( timer0_counter == 0) timer0_flag = 1;
+}
+}
 /* USER CODE END 0 */
 
 /**
@@ -100,64 +112,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  settimer1(100);
-  settimer2(24);
-  int led=0;
+  setTimer0(1000);
   while (1)
   {
-	  if (timer1_flag==1){
-		  settimer1(100);
-	  second ++;
-	  if ( second >= 2) {
-	  second = 0;
-	  minute ++;
-	  }
-	  if( minute >= 60) {
-	  minute = 0;
-	  hour ++;
-	  }
-	  if( hour >=24){
-	  hour = 0;
-	  }
-	  updateClockBuffer ();
+	  if( timer0_flag == 1){
+	  HAL_GPIO_TogglePin ( led_red_GPIO_Port , led_red_Pin );
+	  setTimer0 (2000) ;
 	  }
 
-		  switch(led)
-		  	  {
-		  	  case 0:
-		  		  if (timer2_flag==1)
-		  			  {
-
-		  			  update7SEG(index_led++);
-		  			  if(index_led > MAX_LED-1) index_led=0;
-		  			  led=1;
-		  			settimer2(24);
-		  			  }
-		  		  else update7SEG(index_led);
-
-		  		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 0);
-		  		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 1);
-		  		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
-		  		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
-		  		  break;
-		  	  case 1:
-		  		  if (timer2_flag==1)
-		  		  			  {
-
-		  		  			  update7SEG(index_led++);
-		  		  			  if(index_led > MAX_LED-1) index_led=0;
-		  		  			  led=0;
-		  		  			settimer2(24);
-		  		  			  }
-		  		  		  else update7SEG(index_led);
-
-		  		  HAL_GPIO_WritePin(en0_GPIO_Port, en0_Pin, 1);
-		  		  HAL_GPIO_WritePin(en1_GPIO_Port, en1_Pin, 0);
-		  		  HAL_GPIO_WritePin(en2_GPIO_Port, en2_Pin, 1);
-		  		  HAL_GPIO_WritePin(en3_GPIO_Port, en3_Pin, 1);
-		  		  break;
-		  	  default: break;
-	  }
 
 
     /* USER CODE END WHILE */
@@ -311,7 +273,7 @@ void updateClockBuffer ()
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	timerrun();
+	timer_run();
 }
 
 void display7SEG(int num)
